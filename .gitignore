@@ -3,8 +3,8 @@ result
 result-*
 
 # Private configs
-/nix/*/private.nix
-**/private.nix
+# /nix/*/private.nix
+# **/private.nix
 
 # Backup files
 *.bak

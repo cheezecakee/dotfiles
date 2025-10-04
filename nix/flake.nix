@@ -17,7 +17,6 @@
       modules = [
         lanzaboote.nixosModules.lanzaboote
         ./hosts/desktop/default.nix
-        ./hosts/desktop/private.nix
       ];
 
       specialArgs = {

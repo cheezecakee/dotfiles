@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-cd ~/nix-flake-config/ || {
-  notify-send -u critical "Build Error" "Failed to navigate to ~/nix-flake-config directory"
+cd ~/nix/ || {
+  notify-send -u critical "Build Error" "Failed to navigate to ~/nix directory"
   exit 1
 }
 
