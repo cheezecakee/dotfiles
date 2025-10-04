@@ -1,0 +1,21 @@
+{ config, pkgs, ... }:
+
+{
+  # Copy this file to private.nix and fill in your details
+  # DO NOT commit private.nix to git!
+  
+  services.postgresql = {
+    ensureDatabases = [ "your_database_name" ];
+    ensureUsers = [
+      {
+        name = "your_username";
+        ensureDBOwnership = false;
+      }
+    ];
+    authentication = ''
+      # WARNING: 'trust' authentication is insecure for production!
+      # Consider using 'peer' or 'scram-sha-256' for better security
+      local all all trust
+    '';
+  };
+}
