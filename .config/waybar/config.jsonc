@@ -1,0 +1,99 @@
+{ "layer": "top",
+    "spacing": 10,
+    "height": 30,
+
+    "margin-top": 5,
+    "margin-right": 0,
+    "margin-bottom": 0,
+    "margin-left": 0,
+
+    "modules-left": [
+        "clock",
+        "custom/mpris"
+    ],
+
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+
+    "modules-right": [
+        "network",
+        "pulseaudio",
+        "custom/shutdown"
+    ],
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "1": " ",
+            "2": " ",
+            "3": " ",
+            "4": " ",
+            "5": " ",
+            "urgent": " ",
+            "active": " ",
+            "default": " "
+            },
+        "sort-by-number": true,
+        "persistent-workspaces": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+        }
+    },
+
+    "tray": {
+        "spacing": 10,
+        "tooltip": false
+    },
+
+    "clock": {
+        "format": "{:%a %d, %I:%M %p}",
+        "tooltip": false
+    },
+
+    "network": {
+        "format-wifi" : "  up",
+        "format-ethernet": "󰈀  up",
+        "format-disconnected" : "󰤯  dead",
+        "tooltip": false
+    },
+
+    "pulseaudio": {
+        "scroll-step": 5,
+        "max-volume": 150,
+        "format": "󰕾 {volume}%",
+        "format-bluetooth": "󰕾  {volume}%",
+        "nospacing": 1,
+        "on-click": "pavucontrol",
+        "tooltip": true
+    },
+
+    "custom/shutdown": {
+        "on-click": "wlogout",
+        "format": ""
+    },
+
+    "custom/weather": {
+        "exec": "${HOME}/.config/waybar/scripts/get_weather.sh SaoPaulo+Brazil",
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true,
+        "interval": 3600
+    },
+
+    "custom/mpris": {
+            "exec": "${HOME}/.config/waybar/scripts/mpris-daemon",
+            "return-type": "json",
+            "format": "{icon} {text}",
+            "format-icons": ["", "", "", ""],
+            "tooltip": false,
+            "on-click": "${HOME}/.config/waybar/scripts/mpris-daemon -toggle",
+
+            "on-scroll-up": "${HOME}/.config/waybar/scripts/mpris-daemon -next",
+            "on-scroll-down": "${HOME}/.config/waybar/scripts/mpris-daemon -prev"
+        }
+}

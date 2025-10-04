@@ -1,0 +1,118 @@
+window#waybar {
+    background: transparent;
+}
+
+* {
+    color: white;
+    border-radius: 10px;
+    padding: 0;
+    margin: 0;
+    font-family: 'JetBrainsMono Nerd Font Propo', Roboto;
+    /* font-family: "Agave Nerd Font"; */
+    font-size: 16px;
+}
+
+#clock,
+#battery,
+#cpu,
+#network,
+#pulseaudio,
+#memory,
+#workspaces,
+#workspaces button {
+    padding-left: 10px;
+    background-color: transparent;
+    color: #ffffff;
+}
+#custom-shutdown,
+
+#custom-shutdown {
+    margin-right: 7px;
+    padding: 5px 15px 5px 15px;
+}
+
+#clock:hover,
+#battery:hover,
+#cpu:hover,
+#network:hover,
+#pulseaudio:hover,
+#memory:hover,
+#workspaces:hover,
+
+#custom-spotify:hover {
+    border: 1px rgba(255, 255, 255, 0.7) solid;
+    padding: 1px 15px;
+    border-radius: 20px;
+}
+
+
+#custom-shutdown:hover {
+    border: 1px rgba(255, 255, 255, 0.5) solid;
+    color: #d80000;
+}
+
+button:hover {
+    background: inherit;
+    box-shadow: inset 0 0px #ffffff;
+}
+
+#battery.critical,
+#memory.critical,
+#cpu.critical {
+    color: #d80000;
+}
+
+#battery.warning {
+    color: orange;
+}
+
+.modules-center > widget > #workspaces {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0px 10px;
+}
+
+.modules-center > widget > #workspaces:hover {
+    border: 1px rgba(255, 255, 255, 0.7) solid;
+    padding: 0px 10px;
+    border-radius: 10px;
+}
+
+#custom-mpris {
+    background-color: transparent;
+    color: #ffffff;
+    padding: 0 10px;
+    margin: 0 5px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+/* Playing state - green */
+#custom-mpris.playing {
+    color: #ffffff;
+    border-left: 3px solid #ffffff;
+}
+
+/* Paused state - yellow */
+#custom-mpris.paused {
+    color: #ffffff;
+    border-left: 3px solid #E0B0FF;
+}
+
+/* Stopped state - gray */
+#custom-mpris.stopped {
+    color: #6272a4;
+    border-left: 3px solid #6272a4;
+}
+
+/* Unknown state - red */
+#custom-mpris.unknown {
+    color: #ff5555;
+    border-left: 3px solid #ff5555;
+}
+
+/* Hover effects */
+#custom-mpris:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
