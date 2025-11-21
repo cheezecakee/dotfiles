@@ -1,10 +1,7 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
-    # Version Control
-    git
-
     # Build Tools & Compilers
     gcc
     clang
@@ -27,11 +24,6 @@
     lua-language-server
     luaPackages.luacheck
     stylua
-    haskellPackages.hindent
-
-    # Development Tools
-    ripgrep
-    tree
-    lsof
+    # haskellPackages.hindent
   ];
 }

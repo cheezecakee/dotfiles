@@ -1,29 +1,31 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
-    # Wallpaper & Screenshots
     swww
     hyprshot
     hyprpaper
     hyprshade
-
-    # Bars & Widgets
     eww
     waybar
     waybar-mpris
-
-    # Launchers & Menus
     rofi
+
     wlogout
 
-    # Utilities
-    jq
     socat
-    libnotify
 
-    # Media Control
+    # Wifi manager
+    impala
+
+    # Audio
     mpdris2
     playerctl
+
+    # JSON processor
+    jq
+
+    # Resource monitor
+    btop
   ];
 }

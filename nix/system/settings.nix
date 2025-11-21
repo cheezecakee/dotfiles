@@ -1,6 +1,12 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
+   # Enable nix-command and flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   # Graphics
   hardware.graphics = {
     enable = true;
@@ -21,9 +27,15 @@
   # SSH
   services.openssh.enable = true;
 
+  # Enable elogind for session management
+  services.dbus.enable = true;
+
+  # Enable X server 
+  services.xserver.enable = true;
+
   # USB management utilities
   environment.systemPackages = with pkgs; [
-    udisks2
     power-profiles-daemon
+    udisks2
   ];
 }

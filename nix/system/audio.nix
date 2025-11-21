@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   # Enable PipeWire for audio
@@ -12,9 +12,5 @@
     jack.enable = true;
     wireplumber.enable = true;
   };
-
-  # Audio control GUI (from packages)
-  environment.systemPackages = with pkgs; [
-    pavucontrol
-  ];
 }
+

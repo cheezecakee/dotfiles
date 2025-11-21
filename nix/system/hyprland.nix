@@ -10,17 +10,12 @@
 
   programs.uwsm.enable = true;
 
-  # Enable X server 
-  services.xserver.enable = true;
-
   # Display manager configuration (theme config moved to themes.nix)
   services.displayManager = {
     # SDDM configuration is now handled in themes.nix
     defaultSession = "hyprland-uwsm";
   };
 
-  # Enable elogind for session management
-  services.dbus.enable = true;
 
   # Enable xdg portal for screen capture from Wayland
   xdg.portal = {

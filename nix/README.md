@@ -1,16 +1,16 @@
 # 🍰 nix-flake-config
 
-My personal [NixOS](https://nixos.org/) flake-based configuration for a development and content-creation workstation powered by **Hyprland**, **NVIDIA**, and secure boot.
+My personal [NixOS](https://nixos.org/) flake-based configuration using **flake-parts** for modular system management. Built for development and content-creation workstations powered by **Hyprland**, **NVIDIA**, and secure boot.
 
 ---
 
 ## 🖥️ System Overview
 
-- **OS**: NixOS 25.05
+- **OS**: NixOS (unstable channel)
 - **Display Protocol**: Wayland (Hyprland with UWSM)
 - **Display Manager**: SDDM (Qt6, Astronaut theme)
-- **Graphics**: NVIDIA (PRIME setup with Intel iGPU)
-- **Boot**: Secure Boot via [Lanzaboote](https://github.com/nix-community/lanzaboote)
+- **Graphics**: NVIDIA (PRIME setup with Intel iGPU) - configurable per machine
+- **Boot**: Secure Boot via [Lanzaboote](https://github.com/nix-community/lanzaboote) - configurable per machine
 - **Terminal**: Ghostty
 - **Shell**: Bash
 - **Launcher**: Rofi
@@ -24,34 +24,37 @@ My personal [NixOS](https://nixos.org/) flake-based configuration for a developm
 
 ```
 .
-├── flake.nix                    # Flake entry point
-├── hosts/
-│   └── desktop/
-│       ├── default.nix          # Host-specific configuration
-│       ├── hardware-configuration.nix
-│       ├── filesystems.nix      # Mount points
-│       └── private.nix          # gitignored - see setup below
-├── modules/                     # Reusable system modules
-│   ├── audio.nix
-│   ├── databases.nix
-│   ├── desktop/
-│   │   ├── hyprland.nix
-│   │   ├── ricing.nix
-│   │   └── sddm.nix
-│   ├── development.nix
-│   ├── editors.nix
-│   ├── fonts.nix
-│   ├── nvidia.nix
-│   ├── programs.nix
-│   ├── security/
-│   │   └── secure-boot.nix
-│   ├── services.nix
-│   └── virtualisation.nix
-├── users/
-│   └── cheeze.nix              # User configuration
-└── scripts/
-    ├── nixos-rebuild.sh
-    └── nixos-update.sh
+├── flake.nix                    # Flake entry point with inputs
+├── config.nix                   # Machine-specific feature flags
+├── nixos.nix                    # NixOS configurations (flake-parts)
+├── package.nix                  # Custom packages (flake-parts)
+├── shell.nix                    # Dev shell (flake-parts)
+├── ags.nix                      # AGS/Astal packages and dev shell
+├── machines/
+│   ├── desktop.nix              # Desktop configuration
+│   ├── notebook.nix             # Notebook configuration
+│   ├── hardware-configuration.nix
+│   └── drives.nix               # NTFS drive mounts (desktop only)
+├── system/                      # Modular system configuration
+│   ├── apps.nix                 # GUI applications
+│   ├── audio.nix                # PipeWire audio setup
+│   ├── boot.nix                 # Boot loader & secure boot
+│   ├── cli.nix                  # CLI tools
+│   ├── database.nix             # PostgreSQL/MongoDB
+│   ├── dev.nix                  # Programming languages & tools
+│   ├── docker.nix               # Docker containerization
+│   ├── editor.nix               # Neovim configuration
+│   ├── fonts.nix                # System fonts
+│   ├── graphics.nix             # NVIDIA/GPU configuration
+│   ├── hyprland.nix             # Hyprland window manager
+│   ├── libraries.nix            # GTK/Astal libraries
+│   ├── network.nix              # NetworkManager & IWD
+│   ├── region.nix               # Timezone, locale, keymaps
+│   ├── sddm.nix                 # Display manager
+│   ├── settings.nix             # System-wide settings
+│   └── utils.nix                # Wayland/desktop utilities
+└── users/
+    └── cheeze.nix               # User configuration
 ```
 
 ---
@@ -61,51 +64,77 @@ My personal [NixOS](https://nixos.org/) flake-based configuration for a developm
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/cheezecakee/nix-flake-config.git ~/nix-flake-config
-cd ~/nix-flake-config
+git clone https://github.com/cheezecakee/nix-flake-config.git ~/.dotfiles/nix
+cd ~/.dotfiles/nix
 ```
 
-### 2. Create private configuration
+### 2. Choose your machine configuration
 
-Copy the example and fill in your personal details:
+This flake supports multiple machine profiles configured in `config.nix`:
 
-```bash
-cp hosts/desktop/private.nix.example hosts/desktop/private.nix
-```
+**Desktop** (default):
+- Secure Boot enabled
+- NVIDIA graphics enabled
+- External NTFS drives mounted
 
-Edit `hosts/desktop/private.nix` with your database names, usernames, etc.
+**Notebook**:
+- Secure Boot disabled
+- NVIDIA graphics disabled (uses integrated GPU)
+- No external drives
 
 ### 3. Update hardware configuration
 
-Replace `hosts/desktop/hardware-configuration.nix` with your system's hardware config:
+Replace `machines/hardware-configuration.nix` with your system's hardware config:
 
 ```bash
-sudo nixos-generate-config --show-hardware-config > hosts/desktop/hardware-configuration.nix
+sudo nixos-generate-config --show-hardware-config > machines/hardware-configuration.nix
 ```
 
-### 4. Configure filesystems (optional)
+### 4. Configure machine-specific settings
 
-Edit `hosts/desktop/filesystems.nix` if you have additional drives to mount.
+Edit `config.nix` to match your hardware:
+
+```nix
+{
+  machines = {
+    desktop = {
+      hasSecureBoot = true;   # Enable/disable secure boot
+      hasNvidia = true;       # Enable/disable NVIDIA drivers
+    };
+    
+    notebook = {
+      hasSecureBoot = false;
+      hasNvidia = false;
+    };
+  };
+}
+```
 
 ### 5. Build and switch
 
+**For desktop:**
 ```bash
-sudo nixos-rebuild switch --flake .#nixos
+sudo nixos-rebuild switch --flake .#desktop
+```
+
+**For notebook:**
+```bash
+sudo nixos-rebuild switch --flake .#notebook
 ```
 
 ---
 
 ## 🔐 Secure Boot Setup
 
-This configuration uses **Lanzaboote** for UEFI Secure Boot support.
+This configuration uses **Lanzaboote** for UEFI Secure Boot support (configurable per machine).
 
-### Initial Setup (if not already configured):
+### Initial Setup (if secure boot is enabled in config.nix):
 
 1. **Disable Secure Boot** in your BIOS/UEFI (temporarily)
 
 2. **Build the system** with Lanzaboote enabled:
    ```bash
-   sudo nixos-rebuild switch --flake .#nixos
+   sudo nixos-rebuild switch --flake .#desktop
    ```
 
 3. **Enroll your keys**:
@@ -127,7 +156,7 @@ This configuration uses **Lanzaboote** for UEFI Secure Boot support.
 sudo sbctl status
 ```
 
-**Note**: `secure-boot.nix` is currently configured and enabled. If you want to disable secure boot, comment out the import in `hosts/desktop/default.nix`.
+**Note**: Secure boot can be disabled per machine by setting `hasSecureBoot = false` in `config.nix`.
 
 ---
 
@@ -156,10 +185,16 @@ sudo sbctl status
 - **hyprshot** – screenshot tool
 - **hyprshade** – screen shader/filter
 - **eww** – widget system
+- **AGS** – Aylur's GTK Shell for custom widgets
+- **Astal** – Widget libraries (io, astal4, notifd, battery, network)
 - **SDDM Astronaut theme** – login screen theme
 
 ### 🎮 Gaming
 - **steam** – game platform
+
+### 🌐 Browsers
+- **Zen Browser** – privacy-focused browser
+- **Chromium** – web browser
 
 ---
 
@@ -170,36 +205,35 @@ sudo sbctl status
 - **Rust**: `cargo`
 - **JavaScript**: `nodejs`, `bun`
 - **Python**: `python3`
-- **Go**: `go`
+- **Go**: `go`, `gomodifytags`
 - **Lua**: `lua`, `luarocks`
 - **Zig**: `zig`
 - **Dart**: `dart`
 - **.NET**: `dotnet-sdk_9`
-- **Haskell**: `haskellPackages.hindent`
 
 ### Tools & LSPs
 - **Git** – version control
 - **Lua tools**: `lua-language-server`, `luacheck`, `stylua`
 - **Ripgrep** – fast search
 - **Android Studio** – mobile development
+- **DBeaver** – database management GUI
+- **fd**, **fzf**, **eza**, **zoxide** – modern CLI utilities
 
 ### Containerization
 - **Docker** – enabled with user access
-- **NVIDIA Container Toolkit** – GPU support in containers
 
 ---
 
 ## 🧠 Services & Configuration
 
-### 🖼️ Graphics (NVIDIA)
+### 🖼️ Graphics (NVIDIA - configurable)
 - **PRIME** sync mode (Intel iGPU + NVIDIA dGPU)
 - **Modesetting** enabled
 - **32-bit support** for gaming
-- **Persistent daemon** enabled
-- **Open-source drivers** disabled (using proprietary)
 - Bus IDs:
   - NVIDIA: `PCI:14:0:0`
   - Intel: `PCI:0:2:0`
+- **Can be disabled** per machine in `config.nix`
 
 ### 🔊 Audio (PipeWire)
 - **ALSA** compatibility
@@ -210,14 +244,14 @@ sudo sbctl status
 - **pavucontrol** GUI mixer
 
 ### 🗄️ Databases
-- **PostgreSQL** – enabled (credentials in private.nix)
-- **MongoDB** – disabled by default
+- **PostgreSQL** – enabled
+- **MongoDB** – disabled by default (broken in unstable)
 
 ### 🌐 Networking & Remote Access
 - **NetworkManager** – network management
+- **IWD** – WiFi backend
 - **OpenSSH** – remote shell access
 - **XRDP** – RDP server for remote desktop
-- **Cloudflared** – secure tunnels
 
 ### 🔌 Storage & Auto-Mount
 - **udisks2** – disk management
@@ -227,21 +261,12 @@ sudo sbctl status
 
 ### ⚡ Power Management
 - **power-profiles-daemon** – power profiles
-- **TLP** integration ready (currently disabled)
 
 ---
 
 ## 🎨 Dotfiles
 
 **Important**: This repository only contains the NixOS system configuration. My user dotfiles (Hyprland, Waybar, Neovim configs, etc.) are managed separately.
-
-You can find my dotfiles here: [Link to your dotfiles repo]
-
-Or clone them to the expected location:
-
-```bash
-git clone https://github.com/yourusername/dotfiles.git ~/.config
-```
 
 **Recommended structure**:
 ```
@@ -255,49 +280,119 @@ git clone https://github.com/yourusername/dotfiles.git ~/.config
 
 ---
 
-## 🛠️ Helper Scripts
-
-### `scripts/nixos-rebuild.sh`
-Wrapper for rebuilding the system (you can customize this).
-
-### `scripts/nixos-update.sh`
-Update flake inputs and rebuild.
-
----
-
 ## 📝 Customization Guide
 
 ### Add a new machine
 
-1. Copy `hosts/desktop/` to `hosts/your-machine/`
-2. Update `hardware-configuration.nix`
-3. Adjust `filesystems.nix` and `private.nix`
-4. Add new config to `flake.nix`:
+1. Add machine configuration to `config.nix`:
 
 ```nix
-nixosConfigurations.your-machine = nixpkgs.lib.nixosSystem {
+{
+  machines = {
+    desktop = { ... };
+    notebook = { ... };
+    
+    # New machine
+    workstation = {
+      hasSecureBoot = true;
+      hasNvidia = true;
+    };
+  };
+}
+```
+
+2. Create machine file `machines/workstation.nix`:
+
+```nix
+{ ... }:
+
+{
+  imports = [
+    ./hardware-configuration.nix
+    # Import relevant system modules...
+  ];
+
+  networking.hostName = "workstation";
+  system.stateVersion = "25.05";
+}
+```
+
+3. Add to `nixos.nix`:
+
+```nix
+nixosConfigurations.workstation = inputs.nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
   modules = [
-    lanzaboote.nixosModules.lanzaboote
-    ./hosts/your-machine/default.nix
+    inputs.lanzaboote.nixosModules.lanzaboote
+    ./machines/workstation.nix
   ];
+  specialArgs = { 
+    inherit inputs;
+    machineConfig = configs.machines.workstation;
+  };
 };
 ```
 
-### Disable a module
+4. Build:
 
-Comment out the import in `hosts/desktop/default.nix`:
+```bash
+sudo nixos-rebuild switch --flake .#workstation
+```
+
+### Disable a system module
+
+Comment out the import in your machine file (`machines/desktop.nix` or `machines/notebook.nix`):
 
 ```nix
-# ../../modules/nvidia.nix  # Disabled NVIDIA
+# ../system/graphics.nix  # Disabled NVIDIA
 ```
 
 ### Add packages
 
 Edit the appropriate module:
-- Dev tools → `modules/development.nix`
-- GUI apps → `modules/programs.nix`
-- Desktop tools → `modules/desktop/ricing.nix`
+- GUI apps → `system/apps.nix`
+- CLI tools → `system/cli.nix`
+- Dev tools → `system/dev.nix`
+- Desktop utilities → `system/utils.nix`
+
+---
+
+## 🛠️ Development
+
+### Enter development shell
+
+**General dev shell:**
+```bash
+nix develop
+```
+
+**AGS development shell:**
+```bash
+nix develop .#ags
+```
+
+### Build custom packages
+
+```bash
+nix build .#my-shell
+```
+
+---
+
+## 🔄 Updates
+
+### Update all flake inputs
+
+```bash
+nix flake update
+sudo nixos-rebuild switch --flake .#desktop
+```
+
+### Update specific input
+
+```bash
+nix flake lock --update-input nixpkgs
+```
 
 ---
 
@@ -305,8 +400,9 @@ Edit the appropriate module:
 
 - **Secure Boot**: Must be set up manually after first boot (see above)
 - **NVIDIA**: Nouveau drivers are blacklisted
-- **PostgreSQL**: Uses trust authentication (insecure for production - change in `private.nix`)
+- **MongoDB**: Currently disabled due to build failures in unstable
 - **System State Version**: 25.05 - Do not change this after installation
+- **Channel**: Uses nixos-unstable for latest packages
 
 ---
 
@@ -314,9 +410,11 @@ Edit the appropriate module:
 
 - [NixOS Manual](https://nixos.org/manual/nixos/stable/)
 - [Nix Package Search](https://search.nixos.org/)
+- [Flake Parts Documentation](https://flake.parts/)
 - [Hyprland Wiki](https://wiki.hyprland.org/)
 - [Lanzaboote Documentation](https://github.com/nix-community/lanzaboote)
-- [Home Manager Manual](https://nix-community.github.io/home-manager/) (for future user config migration)
+- [AGS Documentation](https://aylur.github.io/ags-docs/)
+- [Astal Documentation](https://aylur.github.io/astal/)
 
 ---
 

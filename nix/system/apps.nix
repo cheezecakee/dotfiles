@@ -1,7 +1,10 @@
-{ config, pkgs, zen-browser, ... }:
+{ pkgs, inputs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
+    # File manager 
+    superfile
+
     # Text Editors & Note Taking
     obsidian
 
@@ -25,8 +28,10 @@
     # Utilities
     pavucontrol  # Audio control GUI
 
+    # zen-browser
     firefox
+  ] ++ [
 
-    zen-browser.packages.${pkgs.system}.twilight
+    inputs.zen-browser.packages.${pkgs.system}.twilight
   ];
 }
