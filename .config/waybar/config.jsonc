@@ -17,8 +17,8 @@
     ],
 
     "modules-right": [
-        "network",
         "pulseaudio",
+        "network",
         "custom/shutdown"
     ],
 
@@ -56,9 +56,9 @@
     },
 
     "network": {
-        "format-wifi" : "  up",
-        "format-ethernet": "󰈀  up",
-        "format-disconnected" : "󰤯  dead",
+        "format-wifi" : "󰑱",
+        "format-ethernet": "󰤉",
+        "format-disconnected" : "󱘖",
         "tooltip": false
     },
 
@@ -66,7 +66,7 @@
         "scroll-step": 5,
         "max-volume": 150,
         "format": "󰕾 {volume}%",
-        "format-bluetooth": "󰕾  {volume}%",
+        "format-bluetooth": "󰕾 {volume}%",
         "nospacing": 1,
         "on-click": "pavucontrol",
         "tooltip": true
@@ -74,7 +74,7 @@
 
     "custom/shutdown": {
         "on-click": "wlogout",
-        "format": ""
+        "format": ""
     },
 
     "custom/weather": {
