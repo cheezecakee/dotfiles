@@ -21,7 +21,7 @@ result-*
 
 # Ignore everything in config except tracked folders
 /.config/*
-!/config/ags/
+!/.config/ags/
 !/.config/hypr/
 !/.config/rofi/
 !/.config/eww/
