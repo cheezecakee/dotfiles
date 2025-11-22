@@ -8,23 +8,29 @@ window#waybar {
     padding: 0;
     margin: 0;
     font-family: 'JetBrainsMono Nerd Font Propo', Roboto;
+    font-size: 18px;
     /* font-family: "Agave Nerd Font"; */
-    font-size: 16px;
 }
 
 #clock,
 #battery,
 #cpu,
-#network,
 #pulseaudio,
-#memory,
+#network,
+#custom-shutdown,
+#memory {
+    border: 1px rgba(255, 255, 255, 0.7) solid;
+    padding: 1px 15px;
+    border-radius: 10px;
+}
+
 #workspaces,
+#workspaces button:hover,
 #workspaces button {
     padding-left: 10px;
     background-color: transparent;
-    color: #ffffff;
+    color: transparent;
 }
-#custom-shutdown,
 
 #custom-shutdown {
     margin-right: 7px;
@@ -36,22 +42,14 @@ window#waybar {
 #cpu:hover,
 #network:hover,
 #pulseaudio:hover,
-#memory:hover,
-#workspaces:hover,
-
-#custom-spotify:hover {
-    border: 1px rgba(255, 255, 255, 0.7) solid;
-    padding: 1px 15px;
-    border-radius: 20px;
+#memory:hover {
+    background: inherit;
+    box-shadow: inset 0 0px #ffffff;
 }
 
-
-#custom-shutdown:hover {
-    border: 1px rgba(255, 255, 255, 0.5) solid;
-    color: #d80000;
-}
-
-button:hover {
+button:hover  
+{
+    border: none;
     background: inherit;
     box-shadow: inset 0 0px #ffffff;
 }
@@ -67,15 +65,10 @@ button:hover {
 }
 
 .modules-center > widget > #workspaces {
+    border: 1px rgba(255, 255, 255, 0.5) solid;
     margin-left: 0;
     margin-right: 0;
     padding: 0px 10px;
-}
-
-.modules-center > widget > #workspaces:hover {
-    border: 1px rgba(255, 255, 255, 0.7) solid;
-    padding: 0px 10px;
-    border-radius: 10px;
 }
 
 #custom-mpris {
