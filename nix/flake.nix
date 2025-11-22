@@ -16,6 +16,11 @@
       url = "github:aylur/astal";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ags-config = {
+      url = "path:../.config/ags";
+      flake = false;
+    };
   };
 
   outputs = inputs @ { flake-parts, ... }:

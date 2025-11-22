@@ -4,7 +4,10 @@
       pname = "ags-widgets";
       version = "0.1.0";
 
-      src = ../.config/ags;
+      src = inputs.ags-config;
+
+      dontUnpack = true;
+      dontPatch = true;
 
       nativeBuildInputs = with pkgs; [
         wrapGAppsHook4
@@ -34,6 +37,7 @@
 
       installPhase = ''
         mkdir -p $out/bin
+        cd $src
         ${inputs.ags.packages.${system}.default}/bin/ags \
           bundle app.tsx $out/bin/ags-widgets
       '';

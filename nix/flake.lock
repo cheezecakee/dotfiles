@@ -23,6 +23,18 @@
         "type": "github"
       }
     },
+    "ags-config": {
+      "flake": false,
+      "locked": {
+        "path": "../.config/ags",
+        "type": "path"
+      },
+      "original": {
+        "path": "../.config/ags",
+        "type": "path"
+      },
+      "parent": []
+    },
     "astal": {
       "inputs": {
         "nixpkgs": [
@@ -289,6 +301,7 @@
     "root": {
       "inputs": {
         "ags": "ags",
+        "ags-config": "ags-config",
         "astal": "astal",
         "flake-parts": "flake-parts",
         "lanzaboote": "lanzaboote",
