@@ -12,8 +12,6 @@
     eza
     fastfetch
 
-    # ags
-
     # PDF analyzer 
     pdfid
     pdf-parser
