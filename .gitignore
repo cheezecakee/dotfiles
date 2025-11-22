@@ -2,10 +2,6 @@
 result
 result-*
 
-# Private configs
-# /nix/*/private.nix
-# **/private.nix
-
 # Backup files
 *.bak
 *~
@@ -25,6 +21,7 @@ result-*
 
 # Ignore everything in config except tracked folders
 /.config/*
+!/config/ags/
 !/.config/hypr/
 !/.config/rofi/
 !/.config/eww/
