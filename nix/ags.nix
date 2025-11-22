@@ -1,50 +1,84 @@
 { inputs, ... }: {
   perSystem = { pkgs, system, ... }: {
-    # Package for building AGS shell
-    packages.my-shell = pkgs.stdenv.mkDerivation {
-      pname = "my-shell";
+    packages.ags-widgets = pkgs.stdenv.mkDerivation {
+      pname = "ags-widgets";
       version = "0.1.0";
-      
-      src = ./ags;
-      
+
+      src = ../.config/ags;
+
       nativeBuildInputs = with pkgs; [
-        wrapGAppsHook3
+        wrapGAppsHook4
         gobject-introspection
         inputs.ags.packages.${system}.default
       ];
-      
-      buildInputs = with pkgs; [
-        glib
-        gjs
-      ] ++ [
-        inputs.astal.packages.${system}.io
-        inputs.astal.packages.${system}.astal4
-        inputs.astal.packages.${system}.battery
-        inputs.astal.packages.${system}.network
-      ];
-      
+
+      buildInputs =
+        (with pkgs; [
+          gjs
+          glib
+          gtk-layer-shell
+          gtk4
+          gtk4-layer-shell
+          libadwaita
+          libnotify
+          libsoup_3
+        ]) ++ [
+          inputs.astal.packages.${system}.astal4
+          inputs.astal.packages.${system}.battery
+          inputs.astal.packages.${system}.hyprland
+          inputs.astal.packages.${system}.io
+          inputs.astal.packages.${system}.mpris
+          inputs.astal.packages.${system}.network
+          inputs.astal.packages.${system}.notifd
+        ];
+
       installPhase = ''
         mkdir -p $out/bin
-        ${inputs.ags.packages.${system}.default}/bin/ags bundle app.ts $out/bin/my-shell
+        ${inputs.ags.packages.${system}.default}/bin/ags \
+          bundle app.tsx $out/bin/ags-widgets
       '';
+
+
+        preFixup = ''
+          gappsWrapperArgs+=(
+            --prefix PATH "" ${pkgs.lib.makeBinPath [
+              pkgs.gjs
+              pkgs.glib
+              pkgs.gtk-layer-shell
+              pkgs.gtk4
+              pkgs.gtk4-layer-shell
+              pkgs.libadwaita
+              pkgs.libnotify
+              pkgs.libsoup_3
+            ]}
+          )
+        '';
     };
-    
-    # Dev shell for AGS development
+
     devShells.ags = pkgs.mkShell {
-      packages = with pkgs; [
-        gtk4
-        wrapGAppsHook3
-        gobject-introspection
-        glib
-        gjs
-      ] ++ [
-        inputs.ags.packages.${system}.default
-        inputs.astal.packages.${system}.io
-        inputs.astal.packages.${system}.astal4
-        inputs.astal.packages.${system}.notifd
-        inputs.astal.packages.${system}.battery
-        inputs.astal.packages.${system}.network
-      ];
+      packages =
+        (with pkgs; [
+          gjs
+          glib
+          gobject-introspection
+          gtk-layer-shell
+          gtk4
+          gtk4-layer-shell
+          libadwaita
+          libnotify
+          libsoup_3
+          wrapGAppsHook4
+        ]) ++ [
+          inputs.ags.packages.${system}.default
+          inputs.astal.packages.${system}.astal4
+          inputs.astal.packages.${system}.battery
+          inputs.astal.packages.${system}.hyprland
+          inputs.astal.packages.${system}.io
+          inputs.astal.packages.${system}.mpris
+          inputs.astal.packages.${system}.network
+          inputs.astal.packages.${system}.notifd
+        ];
     };
   };
 }
+
