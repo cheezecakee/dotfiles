@@ -2,18 +2,28 @@
 
 {
   environment.systemPackages = with pkgs; [
-    swww
+    # Hypr
     hyprshot
     hyprpaper
     hyprshade
+    hyprpanel
+
+    # Wallpaper
+    swww
+
+    # Widgets
     eww
+
     waybar
     waybar-mpris
+
     rofi
 
     wlogout
 
     socat
+
+    brightnessctl
 
     # Wifi manager
     impala
