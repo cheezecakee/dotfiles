@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ inputs, pkgs, self, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -33,5 +33,7 @@
   ] ++ [
 
     inputs.zen-browser.packages.${pkgs.system}.twilight
+
+    inputs.self.packages.${pkgs.system}.ags-widgets
   ];
 }
