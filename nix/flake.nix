@@ -21,6 +21,11 @@
       url = "path:../.config/ags";
       flake = false;
     };
+
+    dotfile-scripts = {
+      url = "path:../scripts";
+      flake = false;
+    };
   };
 
   outputs = inputs @ { flake-parts, ... }:
@@ -32,6 +37,7 @@
             ./nixos.nix
             ./package.nix
             ./shell.nix
+            ./scripts.nix
             ./ags.nix
         ];
     };
