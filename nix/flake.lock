@@ -70,6 +70,18 @@
         "type": "github"
       }
     },
+    "dotfile-scripts": {
+      "flake": false,
+      "locked": {
+        "path": "../scripts",
+        "type": "path"
+      },
+      "original": {
+        "path": "../scripts",
+        "type": "path"
+      },
+      "parent": []
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -303,6 +315,7 @@
         "ags": "ags",
         "ags-config": "ags-config",
         "astal": "astal",
+        "dotfile-scripts": "dotfile-scripts",
         "flake-parts": "flake-parts",
         "lanzaboote": "lanzaboote",
         "nixpkgs": "nixpkgs_2",
