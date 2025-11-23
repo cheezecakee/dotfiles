@@ -8,7 +8,7 @@ cd ~/nix/ || {
 echo "[*] Rebuilding system..."
 notify-send --replace-id=2000 "NixOS Rebuild" "Rebuilding system configuration..."
 
-if sudo -E nixos-rebuild switch --flake .#nixos; then
+if sudo -E nixos-rebuild switch --flake .#desktop; then
   notify-send --replace-id=2000 "Build Complete" "System rebuild successful!"
 else
   notify-send -u critical --replace-id=2000 "Build Failed" "System rebuild failed"
