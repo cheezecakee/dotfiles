@@ -29,5 +29,18 @@ in
         machineConfig = configs.machines.notebook;
       };
     };
+
+    # New
+    nixosConfigurations.new = inputs.nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        inputs.lanzaboote.nixosModules.lanzaboote
+        ./machines/notebook.nix
+      ];
+      specialArgs = { 
+        inherit inputs;
+        machineConfig = configs.machines.new;
+      };
+    };
   };
 }
