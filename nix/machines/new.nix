@@ -3,7 +3,7 @@
 {
 
   imports = [
-    # Hardware (you'll need to copy these from your old setup)
+    # Hardware (this setup is usually ran with a script that will replace this hardware-configuration config with your current one)
     ./hardware-configuration.nix
     
     # System modules
@@ -23,7 +23,7 @@
     ../system/apps.nix
     
     # User
-    ../users/default.nix #Update this with your user preferences
+    ../users/new.nix #Update this with your user preferences
   ];
 
   networking.hostName = "new";

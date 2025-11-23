@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  users.users.default = {
+  users.users.new = {
     isNormalUser = true;
     description = "change this user name";
     extraGroups = [ "networkmanager" "wheel" ];
