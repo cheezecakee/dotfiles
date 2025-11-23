@@ -22,5 +22,6 @@
     inputs.astal.packages.${pkgs.system}.mpris
     inputs.astal.packages.${pkgs.system}.network
     inputs.astal.packages.${pkgs.system}.notifd
+    inputs.astal.packages.${system}.river
   ];
 }
