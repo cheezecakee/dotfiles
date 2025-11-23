@@ -11,6 +11,11 @@
             hasSecureBoot = false;
             hasNvidia = false;
         };
+
+        new = {
+            hasSecureBoot = false;
+            hasNvidia = false;
+        };
     };
 }
 
