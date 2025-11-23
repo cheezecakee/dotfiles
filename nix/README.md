@@ -17,6 +17,7 @@ My personal [NixOS](https://nixos.org/) flake-based configuration using **flake-
 - **Bar**: Waybar
 - **Audio**: PipeWire
 - **File Systems**: Auto-mount via `udisks2`, `devmon`, `gvfs`
+- **Browser**: Zen
 
 ---
 
@@ -33,8 +34,8 @@ My personal [NixOS](https://nixos.org/) flake-based configuration using **flake-
 ├── machines/
 │   ├── desktop.nix              # Desktop configuration
 │   ├── notebook.nix             # Notebook configuration
+│   ├── new.nix                  # New configuration
 │   ├── hardware-configuration.nix
-│   └── drives.nix               # NTFS drive mounts (desktop only)
 ├── system/                      # Modular system configuration
 │   ├── apps.nix                 # GUI applications
 │   ├── audio.nix                # PipeWire audio setup
