@@ -6,7 +6,7 @@
             pname = "dotfiles-scripts";
             version = "0.1.0";
 
-            src = inputs.dotfiles-scripts;
+            src = inputs.dotfile-scripts;
 
             installPhase = ''
                 mkdir -p $out/bin
