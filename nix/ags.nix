@@ -33,6 +33,7 @@
           inputs.astal.packages.${system}.mpris
           inputs.astal.packages.${system}.network
           inputs.astal.packages.${system}.notifd
+          inputs.astal.packages.${system}.river
         ];
 
       installPhase = ''
@@ -81,6 +82,7 @@
           inputs.astal.packages.${system}.mpris
           inputs.astal.packages.${system}.network
           inputs.astal.packages.${system}.notifd
+          inputs.astal.packages.${system}.river
         ];
     };
   };
