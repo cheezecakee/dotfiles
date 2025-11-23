@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
    # Enable nix-command and flakes
@@ -42,5 +42,6 @@
   environment.systemPackages = with pkgs; [
     power-profiles-daemon
     udisks2
+    inputs.self.packages.${pkgs.system}.dotfiles-scripts
   ];
 }
