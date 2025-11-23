@@ -4,7 +4,7 @@
 # Better transitions than hyprpaper
 
 # Configuration
-readonly WALLPAPER_BASE_DIR="$HOME/Pictures/backgrounds"
+readonly WALLPAPER_BASE_DIR="$HOME/.dotfiles/assets"
 readonly LOG_FILE="$HOME/.cache/hypr-wallpaper.log"
 readonly TRANSITION_TYPE="grow"  # Perfect for space theme - like expanding stars/galaxies
 readonly TRANSITION_DURATION="0.8"  # Slightly longer for dramatic effect
