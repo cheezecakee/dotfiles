@@ -27,3 +27,6 @@ result-*
 !/.config/eww/
 !/.config/end/
 !/.config/waybar/
+
+# Do not copy the hardware config
+./nix/machines/hardware-configuration.nix
