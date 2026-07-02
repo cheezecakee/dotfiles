@@ -27,15 +27,17 @@
 
     # Utilities
     pavucontrol  # Audio control GUI
-
+    
+    # Browser
     # zen-browser
     firefox
-
     brave
-
     google-chrome
 
     caligula
+
+    # Minecraft
+    prismlauncher
   ] ++ [
 
     inputs.zen-browser.packages.${pkgs.system}.twilight
