@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# SWWW workspace wallpaper listener for Hyprland
+# AWWW workspace wallpaper listener for Hyprland
 # Better transitions than hyprpaper
 
 # Configuration
@@ -27,7 +27,7 @@ change_workspace_wallpaper() {
     fi
     
     # Change wallpaper with smooth transition
-    if swww img "$wallpaper_path" \
+    if awww img "$wallpaper_path" \
         --transition-type "$TRANSITION_TYPE" \
         --transition-duration "$TRANSITION_DURATION" \
         --transition-pos "$TRANSITION_POS" \
@@ -43,24 +43,24 @@ get_current_workspace() {
     hyprctl activeworkspace -j | jq -r '.id' 2>/dev/null || echo "1"
 }
 
-# Initialize swww daemon and set initial wallpaper
-init_swww() {
-    # Start swww daemon if not running
-    if ! pgrep -x "swww-daemon" >/dev/null; then
-        log_message "INFO: Starting swww daemon..."
-        swww-daemon &
+# Initialize awww daemon and set initial wallpaper
+init_awww() {
+    # Start awww daemon if not running
+    if ! pgrep -x "awww-daemon" >/dev/null; then
+        log_message "INFO: Starting awww daemon..."
+        awww-daemon &
         sleep 2
     fi
     
     local current_workspace
     current_workspace=$(get_current_workspace)
-    log_message "INFO: Initializing swww wallpaper listener for workspace $current_workspace"
+    log_message "INFO: Initializing awww wallpaper listener for workspace $current_workspace"
     change_workspace_wallpaper "$current_workspace"
 }
 
 # Main event listener function
 listen_workspace_events() {
-    log_message "INFO: Starting workspace wallpaper listener with swww..."
+    log_message "INFO: Starting workspace wallpaper listener with awww..."
     
     # Listen to Hyprland events using socat
     socat -U - "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" | while read -r event; do
@@ -89,12 +89,12 @@ check_dependencies() {
     command -v hyprctl >/dev/null || missing_deps+=("hyprctl")
     command -v socat >/dev/null || missing_deps+=("socat")
     command -v jq >/dev/null || missing_deps+=("jq")
-    command -v swww >/dev/null || missing_deps+=("swww")
+    command -v awww >/dev/null || missing_deps+=("awww")
     
     if [[ ${#missing_deps[@]} -gt 0 ]]; then
         log_message "ERROR: Missing dependencies: ${missing_deps[*]}"
         echo "Error: Missing required dependencies: ${missing_deps[*]}" >&2
-        echo "Install swww with: yay -S swww  # or your package manager" >&2
+        echo "Install awww with: yay -S awww  # or your package manager" >&2
         exit 1
     fi
 }
@@ -110,8 +110,8 @@ main() {
     # Wait for Hyprland to be ready
     sleep 2
     
-    # Initialize swww and wallpaper
-    init_swww
+    # Initialize awww and wallpaper
+    init_awww
     
     # Start listening for events
     listen_workspace_events

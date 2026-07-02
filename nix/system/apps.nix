@@ -30,6 +30,12 @@
 
     # zen-browser
     firefox
+
+    brave
+
+    google-chrome
+
+    caligula
   ] ++ [
 
     inputs.zen-browser.packages.${pkgs.system}.twilight
