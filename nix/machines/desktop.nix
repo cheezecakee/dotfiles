@@ -17,7 +17,7 @@
     ../system/fonts.nix
     ../system/graphics.nix
     ../system/hyprland.nix
-    ../system/libraries.nix
+   ../system/libraries.nix
     ../system/network.nix
     ../system/region.nix
     ../system/sddm.nix

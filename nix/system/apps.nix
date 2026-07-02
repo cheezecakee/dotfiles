@@ -28,8 +28,10 @@
     # Utilities
     pavucontrol  # Audio control GUI
 
-    # zen-browser
-    firefox
+    # browser
+    brave
+
+    prismlauncher
   ] ++ [
 
     inputs.zen-browser.packages.${pkgs.system}.twilight

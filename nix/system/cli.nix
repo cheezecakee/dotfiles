@@ -11,6 +11,7 @@
     fzf 
     eza
     fastfetch
+    unzip
 
     # PDF analyzer 
     pdfid
