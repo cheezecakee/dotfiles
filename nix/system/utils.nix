@@ -9,7 +9,7 @@
     hyprpanel
 
     # Wallpaper
-    swww
+    awww
 
     # Widgets
     eww
@@ -24,9 +24,6 @@
     socat
 
     brightnessctl
-
-    # Wifi manager
-    impala
 
     # Audio
     mpdris2

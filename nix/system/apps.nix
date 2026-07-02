@@ -27,10 +27,16 @@
 
     # Utilities
     pavucontrol  # Audio control GUI
-
-    # browser
+    
+    # Browser
+    # zen-browser
+    firefox
     brave
+    google-chrome
 
+    caligula
+
+    # Minecraft
     prismlauncher
   ] ++ [
 

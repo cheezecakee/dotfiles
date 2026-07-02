@@ -3,7 +3,7 @@
 # Get hostname argument or default to current hostname
 MACHINE="${1:-$(hostname)}"
 
-cd ~/.dotfiles/nix || {
+cd ~/dotfiles/nix || {
   notify-send -u critical "Build Error" "Failed to navigate to ~/.dotfiles/nix directory"
   exit 1
 }
