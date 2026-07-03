@@ -42,6 +42,6 @@
   environment.systemPackages = with pkgs; [
     power-profiles-daemon
     udisks2
-    inputs.self.packages.${pkgs.system}.dotfiles-scripts
+    inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.dotfiles-scripts
   ];
 }

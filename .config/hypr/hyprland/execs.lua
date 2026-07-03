@@ -11,7 +11,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("waybar")
 	hl.exec_cmd("mpDris2 &")
 	hl.exec_cmd("awww-daemon")
-	hl.exec_cmd("~/.config/hypr/scripts/wallpaper.sh")
+	hl.exec_cmd("~/.config/hypr/hyprland/scripts/wallpaper.sh")
 
 	-- Audio
 	-- hl.exec_cmd("easyeffects --hide-window --service-mode")

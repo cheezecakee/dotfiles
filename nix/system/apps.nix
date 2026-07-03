@@ -20,7 +20,7 @@
     spotify
 
     # Development IDEs
-    android-studio
+    # android-studio
 
     # Gaming
     steam
@@ -38,10 +38,5 @@
 
     # Minecraft
     prismlauncher
-  ] ++ [
-
-    inputs.zen-browser.packages.${pkgs.system}.twilight
-
-    inputs.self.packages.${pkgs.system}.ags-widgets
   ];
 }

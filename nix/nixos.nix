@@ -6,7 +6,6 @@ in
   flake = {
     # Desktop
     nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       modules = [
         inputs.lanzaboote.nixosModules.lanzaboote
         ./machines/desktop.nix
@@ -19,7 +18,6 @@ in
     
     # Notebook
     nixosConfigurations.notebook = inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       modules = [
         inputs.lanzaboote.nixosModules.lanzaboote
         ./machines/notebook.nix
@@ -32,7 +30,6 @@ in
 
     # New
     nixosConfigurations.new = inputs.nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       modules = [
         inputs.lanzaboote.nixosModules.lanzaboote
         ./machines/notebook.nix
