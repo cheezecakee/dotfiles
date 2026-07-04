@@ -7,7 +7,7 @@ if [ "$1" = "." ] && [ -n "$2" ]; then
     git push
     echo "Committed & pushed: $2"
     exit 0
-fi
+fi  
 
 while true; do
     echo
