@@ -9,132 +9,165 @@ echo "Hello, welcome to Nix Setup"
 # TODO pipe lsblk 
 # CREATE a root mount 
 # RUN nixos-enter --root /mnt/[mount]
+running=true
 
-# PROMPT DEFAULT 
-echo "Set generic profile?"
-echo "1) Yes"
-echo "2) No"
-echo -n "> "
-read -r DEFAULT_MODE
+while true; do
+    # PROMPT DEFAULT 
+    echo "Set generic profile?"
+    echo "1) Yes"
+    echo "2) No"
+    echo -n "> "
+    read -r DEFAULT_MODE
 
-case "$DEFAULT_MODE" in 
-    1) GENERIC="yes" ;;
-    2) GENERIC="no" ;;
-esac
+    case "$DEFAULT_MODE" in 
+        1) GENERIC="yes" ;;
+        2) GENERIC="no" ;;
+    esac
 
-# TODO add generic vairables and jump sstraight to the end
-if [[ "$DEFAULT_MODE" == 1 ]]; then  
-    echo "Selected $GENERIC"
-fi
 
-# PROMPT HOSTNAME 
-echo "Hostname? [Default = Host]"
-echo -n "> "
-read -r HOSTNAME
+    if [[ "$DEFAULT_MODE" == 1 ]]; then  
+        # TODO add generic vairables and jump straight to the end
+        HOSTNAME="host"
+        USERNAME="host"
+        MACHINE="notebook" #default to notebook, safer choice
+        GPU="none"
+        POWERMODE="balanced"
+        AUTOLOGIN="no"
+        MOUNT="no"
+    else 
+        # PROMPT HOSTNAME 
+        echo "Hostname? [Default = Host]"
+        echo -n "> "
+        read -r HOSTNAME
 
-echo "Hostname set: "$HOSTNAME""
+        if [[ -z "${HOSTNAME}" ]]; then 
+            HOSTNAME="host"
+        fi
 
-# PROMPT MACHINETYPE 
-echo "Select machine type?"
-echo "1) Desktop"
-echo "2) Notebook"
-echo -n "> "
-read -r MACHINE_TYPE
+        echo "Hostname set: "$HOSTNAME""
 
-case "$MACHINE_TYPE" in 
-    1) MACHINE="desktop" ;;
-    2) MACHINE="notebook" ;;
-esac
+        # PROMPT USERNAME 
+        echo "Username [Default: Host]"
+        echo -n "> "
+        read -r USERNAME
 
-# PROMPT SECUREBOOT (Actually skip this one for now and return false)
-# TODO
+        if [[ -z "${USERNAME}" ]]; then 
+            USERNAME="host"
+        fi
 
-# PROMPT GPU (only nvidia none for now)
-echo "Select GPU? [Default: None]"
-echo "1) Nvidia"
-echo "2) AMD"
-echo "3) Intel"
-echo "4) None"
-echo -n "> "
-read -r GPU_TYPE
+        # PROMPT MACHINETYPE 
+        echo "Select machine type?"
+        echo "1) Desktop"
+        echo "2) Notebook"
+        echo -n "> "
+        read -r MACHINE_TYPE
 
-case "$GPU_TYPE" in 
-    1) GPU="nvidia" ;;
-    2) GPU="amd" ;;
-    3) GPU="intel" ;;
-    *) GPU="none" ;;
-esac
+        case "$MACHINE_TYPE" in 
+            1) MACHINE="desktop" ;;
+            2) MACHINE="notebook" ;;
+        esac
 
-# PROMPT POWERMODE
-echo "Select power mode [Default: balanced]"
-echo "1) Balanced"
-echo "2) Perfomance"
-echo "3) Powersave"
-echo -n "> "
-read -r POWER_TYPE
+        # PROMPT SECUREBOOT (Actually skip this one for now and return false)
+        # TODO
 
-case "$POWER_TYPE" in
-    1) POWERMODE="balanced" ;;
-    2) POWERMODE="perfomance" ;;
-    3) POWERMODE="powersave" ;;
-    *) POWERMODE="balanced" ;;
-esac
+        # PROMPT GPU (only nvidia none for now)
+        echo "Select GPU? [Default: None]"
+        echo "1) Nvidia"
+        echo "2) AMD"
+        echo "3) Intel"
+        echo "4) None"
+        echo -n "> "
+        read -r GPU_TYPE
 
-# PROMPT USERNAME 
-echo "Username [Default: Host]"
-echo -n "> "
-read -r USERNAME
+        case "$GPU_TYPE" in 
+            1) GPU="nvidia" ;;
+            2) GPU="amd" ;;
+            3) GPU="intel" ;;
+            *) GPU="none" ;;
+        esac
 
-# PROMPT PASSWORD
-# TODO skip for now
+        # PROMPT POWERMODE
+        echo "Select power mode [Default: balanced]"
+        echo "1) Balanced"
+        echo "2) Perfomance"
+        echo "3) Powersave"
+        echo -n "> "
+        read -r POWER_TYPE
 
-# PROMPT AUTOLOGIN
-echo "Autologin? [Default: No]"
-echo "1) Yes"
-echo "2) No"
-echo -n "> "
-read -r AUTOLOGIN
+        case "$POWER_TYPE" in
+            1) POWERMODE="balanced" ;;
+            2) POWERMODE="perfomance" ;;
+            3) POWERMODE="powersave" ;;
+            *) POWERMODE="balanced" ;;
+        esac
 
-case "$AUTOLOGIN" in 
-    1) AUTOLOGIN="yes";;
-    2) AUTOLOGIN="no" ;;
-    *) AUTOLOGIN="no" ;;
-esac
 
-# PROMPT STORAGE (TODO different script, storage.sh)
-echo "Mount drives? [Default: No]"
-echo "1) Yes"
-echo "2) No"
-echo -n "> "
-read -r MOUNT_DRIVES
+        # PROMPT PASSWORD
+        # TODO skip for now
 
-case "$MOUNT_DRIVES" in 
-    1) MOUNT="yes";;
-    2) MOUNT="no" ;;
-    *) MOUNT="no" ;;
-esac
+        # PROMPT AUTOLOGIN
+        echo "Autologin? [Default: No]"
+        echo "1) Yes"
+        echo "2) No"
+        echo -n "> "
+        read -r AUTOLOGIN
 
-# TODO if statement to call storage.sh to mount the drives
+        case "$AUTOLOGIN" in 
+            1) AUTOLOGIN="yes";;
+            2) AUTOLOGIN="no" ;;
+            *) AUTOLOGIN="no" ;;
+        esac
 
-# SAVE all results to their respective variables 
-echo "CONFIRM RESULTS"
-echo "Generic profile: $GENERIC"
-echo "Hostname: $HOSTNAME"
-echo "Machine: $MACHINE"
-echo "GPU: $GPU"
-echo "Powermode: $POWERMODE"
-echo "Username: $USERNAME"
-echo "Autologin: $AUTOLOGIN"
-echo "Mounted drives: $MOUNT"
-echo "1) Yes"
-echo "2) No"
-echo -n "> "
-read -r CONFIRMATION
+        # PROMPT STORAGE (TODO different script, storage.sh)
+        echo "Mount drives? [Default: No]"
+        echo "1) Yes"
+        echo "2) No"
+        echo -n "> "
+        read -r MOUNT_DRIVES
 
-case $CONFIRMATION in
-    1) CONFIRMATION="yes" ;;
-    2) CONFIRMATION="no"  ;;
-esac
+        case "$MOUNT_DRIVES" in 
+            1) MOUNT="yes";;
+            2) MOUNT="no" ;;
+            *) MOUNT="no" ;;
+        esac
+
+        if [[ "$MOUNT" == "yes" ]]; then 
+            # TODO if statement to call storage.sh to mount the drives
+            :
+        fi
+
+    fi
+
+    # SAVE all results to their respective variables 
+    echo "CONFIRM RESULTS"
+    echo "Hostname: $HOSTNAME"
+    echo "Machine: $MACHINE"
+    echo "GPU: $GPU"
+    echo "Powermode: $POWERMODE"
+    echo "Username: $USERNAME"
+    echo "Autologin: $AUTOLOGIN"
+    echo "Mounted drives: $MOUNT"
+    echo "1) Yes"
+    echo "2) No"
+    echo -n "> "
+    read -r CONFIRMATION
+
+    case $CONFIRMATION in
+        1) CONFIRMATION="yes" ;;
+        2) CONFIRMATION="no"  ;;
+    esac
+
+    if [[ "$CONFIRMATION" == "yes" ]] ; then 
+        export HOSTNAME
+        export USERNAME
+        export MACHINE
+        export GPU
+        export POWERMODE
+        export AUTOLOGIN
+        running=false
+        break
+    fi
+done
 
 echo "Generating config..."
 # PROMPT CONFIRMATION
@@ -170,5 +203,6 @@ esac
 # REBOOT 
 if [[ "$REBOOT" == "yes" ]]; then 
     echo "System rebooting..."
-    # TODO run reboot command
+    sleep 5
+    reboot
 fi
