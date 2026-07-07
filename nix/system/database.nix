@@ -9,7 +9,7 @@
 
   # Database CLI tools
   environment.systemPackages = with pkgs; [
-    postgresql
+    # postgresql
     # mongodb
   ];
 }

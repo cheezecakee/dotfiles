@@ -103,7 +103,7 @@ hl.config({
         kb_layout = "us",
         numlock_by_default = true,
         repeat_delay = 250,
-        repeat_rate = 35,
+        repeat_rate = 31,
 
         -- Old config
         -- follow_mouse = 1

@@ -1,12 +1,12 @@
-{ ... }:
+{ hostConfig, ... }:
 
 {
+
   imports = [
-    # Hardware
+    # Hardware (you'll need to copy these from your old setup)
     ./hardware-configuration.nix
-    # No drives.nix for notebook
     
-    # System modules (same as desktop)
+    # System modules
     ../system/audio.nix
     ../system/boot.nix
     ../system/cli.nix
@@ -29,8 +29,8 @@
     ../users/cheeze.nix
   ];
 
-  # Machine-specific hostname
-  networking.hostName = "notebook";
-  
+  networking.hostName = hostConfig.hostName;
+
   system.stateVersion = "25.05";
 }
+

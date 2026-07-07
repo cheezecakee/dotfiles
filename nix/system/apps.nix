@@ -23,16 +23,16 @@
     # android-studio
 
     # Gaming
-    steam
+    # steam
 
     # Utilities
     pavucontrol  # Audio control GUI
     
     # Browser
     # zen-browser
-    firefox
+    # firefox
     brave
-    google-chrome
+    # google-chrome
 
     caligula
 

@@ -1,21 +1,11 @@
-## This will be the entry point to select desktop || notebook 
-## UEFI dual boot (lanzaboot), etc.
+# DO NOT TOUCH THIS FILE
+
 {
-    machines = {
-        desktop = {
-            hasSecureBoot = true;
-            hasNvidia = true;
-        };
-
-        notebook = {
-            hasSecureBoot = false;
-            hasNvidia = false;
-        };
-
-        new = {
-            hasSecureBoot = false;
-            hasNvidia = false;
-        };
-    };
+    hostName = "host";
+    machineType = "desktop";
+    hasSecureBoot = false;
+    gpu = "nvidia";
+    powerMode = "perfomance";
+    username = "host";
+    autoLogin = true;
 }
-

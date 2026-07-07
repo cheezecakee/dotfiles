@@ -41,3 +41,26 @@ in
     };
   };
 }
+
+# { inputs, ... }: 
+#
+# let
+#   configs = import ./config.nix;
+# in
+# {
+#   flake = {
+#     # Desktop
+#     nixosConfigurations.host = inputs.nixpkgs.lib.nixosSystem {
+#       modules = [
+#         inputs.lanzaboote.nixosModules.lanzaboote
+#         ./host/host.nix
+#         ./host/storage.nix
+#       ];
+#       specialArgs = { 
+#         inherit inputs;
+#         machineConfig = configs.host;
+#       };
+#     };
+#   };
+# }
+

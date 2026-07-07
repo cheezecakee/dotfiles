@@ -5,6 +5,7 @@
     git
     ripgrep
     tree
+    lf
     lsof
     zoxide 
     fd
@@ -12,6 +13,7 @@
     eza
     fastfetch
     unzip
+    bat
 
     # PDF analyzer 
     pdfid

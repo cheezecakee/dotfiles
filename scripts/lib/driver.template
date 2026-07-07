@@ -1,0 +1,5 @@
+  fileSystems."${MOUNTPOINT}" = {
+    device = "/dev/disk/by-uuid/${DEVICE}";
+    fsType = "${FSTYPE}";
+    options = [ ${OPTIONS} ];
+  };

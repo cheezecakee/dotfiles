@@ -1,0 +1,22 @@
+# DO NOT TOUCH THIS FILE
+
+{ self, inputs, ... }: {
+    flake.nixosModules.myMachineConfiguration = { pkgs, lib, ... }: {
+        imports = [
+            self.nixosModules.myMachineHardware
+        ];
+        networking.hostName = "${HOSTNAME}";
+
+        machine.type = "${MACHINE}";
+
+        secureBoot.enable = ${SECUREBOOT};
+
+        gpu.type = "${GPU}";
+
+        powerMode.type = "${POWERMODE}";
+
+        username = "${USERNAME}";
+
+        autoLogin.enable = ${AUTOLOGIN};
+    }
+}

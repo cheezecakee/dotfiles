@@ -10,14 +10,14 @@
     ../system/audio.nix
     ../system/boot.nix
     ../system/cli.nix
-    ../system/database.nix
+    # ../system/database.nix
     ../system/dev.nix
-    ../system/docker.nix
+    # ../system/docker.nix
     ../system/editor.nix
     ../system/fonts.nix
     ../system/graphics.nix
     ../system/hyprland.nix
-   ../system/libraries.nix
+    ../system/libraries.nix
     ../system/network.nix
     ../system/region.nix
     ../system/sddm.nix

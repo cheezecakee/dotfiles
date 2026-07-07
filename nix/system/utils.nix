@@ -13,6 +13,7 @@
 
     # Widgets
     eww
+    noctalia-shell
 
     waybar
     waybar-mpris
@@ -34,5 +35,6 @@
 
     # Resource monitor
     btop
+
   ];
 }

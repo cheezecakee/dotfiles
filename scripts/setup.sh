@@ -1,6 +1,5 @@
-#!/usr/bin/env bash
-
-./mount
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p envsubst
 
 echo "Hello, welcome to Nix Setup"
 
@@ -9,8 +8,6 @@ echo "Hello, welcome to Nix Setup"
 # TODO pipe lsblk 
 # CREATE a root mount 
 # RUN nixos-enter --root /mnt/[mount]
-running=true
-
 while true; do
     # PROMPT DEFAULT 
     echo "Set generic profile?"
@@ -20,20 +17,20 @@ while true; do
     read -r DEFAULT_MODE
 
     case "$DEFAULT_MODE" in 
-        1) GENERIC="yes" ;;
-        2) GENERIC="no" ;;
+        1) GENERIC="true" ;;
+        2) GENERIC="false" ;;
     esac
 
 
     if [[ "$DEFAULT_MODE" == 1 ]]; then  
-        # TODO add generic vairables and jump straight to the end
         HOSTNAME="host"
         USERNAME="host"
         MACHINE="notebook" #default to notebook, safer choice
+        SECUREBOOT="false"
         GPU="none"
         POWERMODE="balanced"
-        AUTOLOGIN="no"
-        MOUNT="no"
+        AUTOLOGIN=false
+        MOUNT="false"
     else 
         # PROMPT HOSTNAME 
         echo "Hostname? [Default = Host]"
@@ -46,14 +43,15 @@ while true; do
 
         echo "Hostname set: "$HOSTNAME""
 
+        # TODO move this to init.sh
         # PROMPT USERNAME 
-        echo "Username [Default: Host]"
-        echo -n "> "
-        read -r USERNAME
-
-        if [[ -z "${USERNAME}" ]]; then 
-            USERNAME="host"
-        fi
+        # echo "Username [Default: Host]"
+        # echo -n "> "
+        # read -r USERNAME
+        #
+        # if [[ -z "${USERNAME}" ]]; then 
+        #     USERNAME="host"
+        # fi
 
         # PROMPT MACHINETYPE 
         echo "Select machine type?"
@@ -69,6 +67,7 @@ while true; do
 
         # PROMPT SECUREBOOT (Actually skip this one for now and return false)
         # TODO
+        SECUREBOOT="false"
 
         # PROMPT GPU (only nvidia none for now)
         echo "Select GPU? [Default: None]"
@@ -81,7 +80,7 @@ while true; do
 
         case "$GPU_TYPE" in 
             1) GPU="nvidia" ;;
-            2) GPU="amd" ;;
+            2) GPU="amdgpu" ;;
             3) GPU="intel" ;;
             *) GPU="none" ;;
         esac
@@ -113,12 +112,12 @@ while true; do
         read -r AUTOLOGIN
 
         case "$AUTOLOGIN" in 
-            1) AUTOLOGIN="yes";;
-            2) AUTOLOGIN="no" ;;
-            *) AUTOLOGIN="no" ;;
+            1) AUTOLOGIN="true";;
+            2) AUTOLOGIN="false" ;;
+            *) AUTOLOGIN="false" ;;
         esac
 
-        # PROMPT STORAGE (TODO different script, storage.sh)
+        # PROMPT STORAGE
         echo "Mount drives? [Default: No]"
         echo "1) Yes"
         echo "2) No"
@@ -126,25 +125,27 @@ while true; do
         read -r MOUNT_DRIVES
 
         case "$MOUNT_DRIVES" in 
-            1) MOUNT="yes";;
-            2) MOUNT="no" ;;
-            *) MOUNT="no" ;;
+            1) MOUNT="true";;
+            2) MOUNT="false" ;;
+            *) MOUNT="false" ;;
         esac
 
-        if [[ "$MOUNT" == "yes" ]]; then 
+        if [[ "$MOUNT" == "true" ]]; then 
+            bash ./storage.sh
             # TODO if statement to call storage.sh to mount the drives
             :
         fi
 
     fi
 
+    # PROMPT CONFIRMATION
     # SAVE all results to their respective variables 
     echo "CONFIRM RESULTS"
     echo "Hostname: $HOSTNAME"
     echo "Machine: $MACHINE"
     echo "GPU: $GPU"
     echo "Powermode: $POWERMODE"
-    echo "Username: $USERNAME"
+    # echo "Username: $USERNAME"
     echo "Autologin: $AUTOLOGIN"
     echo "Mounted drives: $MOUNT"
     echo "1) Yes"
@@ -153,41 +154,54 @@ while true; do
     read -r CONFIRMATION
 
     case $CONFIRMATION in
-        1) CONFIRMATION="yes" ;;
-        2) CONFIRMATION="no"  ;;
+        1) CONFIRMATION="true" ;;
+        2) CONFIRMATION="false"  ;;
     esac
 
-    if [[ "$CONFIRMATION" == "yes" ]] ; then 
+    if [[ "$CONFIRMATION" == "true" ]] ; then 
         export HOSTNAME
-        export USERNAME
+        # export USERNAME
         export MACHINE
         export GPU
         export POWERMODE
         export AUTOLOGIN
-        running=false
+        export SECUREBOOT
         break
     fi
 done
 
+# GENERATE config
 echo "Generating config..."
-# PROMPT CONFIRMATION
+bash $HOME/.dotfiles/scripts/lib/_template.sh
  
-echo "Config generated in ../nix/host"
+echo "Config generated in ../nix/host/host.nix"
 
-# CALL templates.sh to inject the variables to the files 
 echo "Generating Hardware-configuration..."
-# GENERATE hardware-config and copy it to host dir 
+
+# GENERATE hardware-config to host dir 
+nixos-generate-config --show-hardware-config > ../nix/host/hardware-configuration.nix 2>/dev/null
 
 echo "Hardware-configuration generated in ../nix/host"
 
-echo "Verifying build..."
-# TODO RUN nix rebuild check 
+# echo "Verifying build..."
 
-# IF successful run actual rebuild 
-echo "Verified successfully"
-echo "Starting rebuild"
 
-echo "Rebuild successful"
+# cd ../nix
+# if nix flake check; then
+#     echo "Verified successfully"
+#
+#     # IF successful run actual rebuild 
+#     echo "Starting rebuild"
+#     if nixos-rebuild switch --flake ".#$HOSTNAME"; then 
+#         echo "Rebuild successful"
+#     else 
+#         echo "Rebuild failed"
+#         exit 1
+#     fi
+# else 
+#     echo "Flake check failed"
+#     exit 1
+# fi
 
 echo "Reboot system now?"
 echo "1) Yes"
@@ -196,12 +210,12 @@ echo -n "> "
 read -r REBOOT
 
 case "$REBOOT" in 
-    1) REBOOT="yes" ;;
-    2) REBOOT="no" ;;
+    1) REBOOT="true" ;;
+    2) REBOOT="false" ;;
 esac
 
 # REBOOT 
-if [[ "$REBOOT" == "yes" ]]; then 
+if [[ "$REBOOT" == "true" ]]; then 
     echo "System rebooting..."
     sleep 5
     reboot

@@ -100,7 +100,7 @@ for i = 1, workspaceGroupSize do
 end
 
 --## Special
-bind("S", hl.dsp.workspace.toggle_special("special"), { description = "Workspace: Toggle scratchpad" }) --#!
+bind("S", hl.dsp.workspace.toggle_special("magic"), { description = "Workspace: Toggle scratchpad" }) --#!
 
 --# Testing
 -- bind("CTRL + F11",
@@ -137,6 +137,7 @@ bind("E", hl.dsp.exec_cmd(fileManager))
 bind("W", hl.dsp.exec_cmd(browser))
 bind("X", hl.dsp.exec_cmd(codeEditor), { description = "App: Code editor" })
 bind("D", hl.dsp.exec_cmd("rofi -show drun"), { description = "App: Launcher" })
+bind("D", hl.dsp.exec_cmd("hyprctl reload"), { description = "Reloads hyprland" })
 
 -- bind("CTRL + V", hl.dsp.exec_cmd(volumeMixer), { description = "App: Volume mixer" })
 -- bind("CTRL + Escape", hl.dsp.exec_cmd(taskManager), { description = "App: Task manager" })
