@@ -7,6 +7,7 @@
             self.nixosModules.myMachineConfiguration
             self.nixosModules.systemMod
             self.nixosModules.featuresMod
+            self.nixosModules.dev
             self.nixosModules.userMod
         ];
     };
