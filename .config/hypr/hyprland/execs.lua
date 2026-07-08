@@ -8,9 +8,10 @@ hl.on("hyprland.start", function()
 		"sleep 2 && dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE"
 	)
 
-	hl.exec_cmd("waybar")
-	hl.exec_cmd("mpDris2 &")
+	-- hl.exec_cmd("waybar")
+	hl.exec_cmd("noctalia-shell")
 	hl.exec_cmd("awww-daemon")
+	-- hl.exec_cmd("mpDris2 &")
 	hl.exec_cmd("~/.config/hypr/hyprland/scripts/wallpaper.sh")
 
 	-- Audio

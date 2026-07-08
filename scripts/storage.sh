@@ -10,7 +10,7 @@ isDigit() {
     fi
 }
 
-STORAGE_FILE="$HOME/.dotfiles/nix/host/storage.nix"
+STORAGE_FILE="$HOME/.dotfiles/nix/modules/hardware/storage.nix"
 DRIVERS=""
 
 if [[ -f "$STORAGE_FILE" ]]; then

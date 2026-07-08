@@ -27,6 +27,12 @@
             options = [ "defaults" "nofail" "uid=1000" "gid=988" "umask=022" ];
         };
 
+        fileSystems."home/cheeze/ssd" = {
+          device = "/dev/disk/by-uuid/3C4450514450104E";
+          fsType = "ntfs-3g";
+          options = [ "defaults" "nofail" "uid=1000" "umask=022" ];
+        };
+
         # DO NOT REMOVE THIS LINE
     };
 }
