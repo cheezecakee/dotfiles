@@ -1,13 +1,16 @@
 { inputs, self, ... }:
 {
-    flake.nixosModules.utilsMod = { pkgs, ... }: {
-        environment.systemPackages = with pkgs; [
-            # Wallpaper
-            awww
+  flake.nixosModules.utilsMod = { pkgs, ... }: {
+    environment.systemPackages = with pkgs; [
+      # Wallpaper
+      awww
 
-            # Audio
-            mpdris2
-        ];
-    };
+      lazygit
+
+      libnotify
+
+      # Audio
+      mpdris2
+    ];
+  };
 }
-

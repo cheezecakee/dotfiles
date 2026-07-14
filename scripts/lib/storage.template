@@ -2,6 +2,6 @@
 { ... }:
 
 {
- ${MOUNTS}
+    ${MOUNTS}
  # DO NOT REMOVE THIS LINE - new mounts are inserted above it
-}
+
