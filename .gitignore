@@ -9,7 +9,6 @@ result-*
 # Ignore everything in share except tracked folders
 /share/*
 !/share/sddm/
-!/share/applications/
 !/share/fonts/
 
 # Ignore OS files and caches
@@ -21,12 +20,8 @@ result-*
 
 # Ignore everything in config except tracked folders
 /.config/*
-!/.config/ags/
 !/.config/hypr/
 !/.config/rofi/
-!/.config/eww/
-!/.config/end/
-!/.config/waybar/
 
 # Do not copy the hardware config
-./nix/machines/hardware-configuration.nix
+./nix/modules/hosts/hardware/hardware.nix
