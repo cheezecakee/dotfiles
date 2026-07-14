@@ -22,6 +22,8 @@ result-*
 /.config/*
 !/.config/hypr/
 !/.config/rofi/
+!/.config/noctalia/
 
 # Do not copy the hardware config
 ./nix/modules/hosts/hardware/hardware.nix
+./nix/modules/hosts/*
