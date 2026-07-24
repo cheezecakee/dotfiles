@@ -1,18 +1,18 @@
 # DO NOT TOUCH THIS FILE
 { self, inputs, ... }: {
-    flake.nixosModules.desktopConfiguration = { pkgs, lib, ... }: {
-        networking.hostName = "desktop";
+  flake.nixosModules.desktopConfiguration = { pkgs, lib, ... }: {
+    networking.hostName = "desktop";
 
-        machine.type = "desktop";
+    machine.type = "desktop";
 
-        secureboot.enable = false;
+    secureboot.enable = true;
 
-        gpu.type = "nvidia";
+    gpu.type = "nvidia";
 
-        powerMode.type = "perfomance";
+    powerMode.type = "perfomance";
 
-        autoLogin.enable = true;
+    autoLogin.enable = true;
 
-        system.stateVersion = "25.05";
-    };
+    system.stateVersion = "25.05";
+  };
 }

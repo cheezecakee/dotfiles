@@ -8,7 +8,6 @@
 
         gopls
         gofumpt
-        goimports
 
         gotools
         gomodifytags

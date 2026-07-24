@@ -8,6 +8,10 @@ hl.on("hyprland.start", function()
 		"sleep 2 && dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE"
 	)
 
+	-- Max nvidia vibrance
+	-- If it doesn't support it will just skip
+	hl.exec_cmd("nvibrant 0 0 1023")
+
 	-- hl.exec_cmd("waybar")
 	hl.exec_cmd("noctalia-shell")
 	hl.exec_cmd("awww-daemon")

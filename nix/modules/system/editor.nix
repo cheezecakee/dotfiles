@@ -25,6 +25,8 @@
       mdformat
       markdownlint-cli2
       markdown-toc
+
+      gcc
     ];
   };
 }

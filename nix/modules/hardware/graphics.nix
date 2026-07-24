@@ -9,7 +9,6 @@
       ...
     }:
     {
-
       config = {
         services.xserver.enable = true;
 
@@ -55,7 +54,9 @@
           package = config.boot.kernelPackages.nvidiaPackages.stable;
           # hardware.nvidia-container-toolkit.enable = lib.mkIf machineConfig.hasNvidia true;
         };
-
+        environment.systemPackages = with pkgs; [
+          nvibrant
+        ];
       };
     };
 }
